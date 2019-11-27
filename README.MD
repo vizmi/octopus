@@ -42,34 +42,52 @@ runbook.json describes the actions Octopus needs to perform on all hosts.
 A runbook is essentially an (ordered) list of actions. Each action has zero or
 more arguments (or args for sort). The action determines the command(s) being
 executed, while the arguments determine its args.
+An example of a simple runbook:
+
+```
+[   {   "name": "InstallPackage",
+        "args": {
+            "pkg": "apache2 php5"
+        }
+    },{ "name": "CopyFile",
+        "args": {
+            "source": "C:\\Users\\user\\code\\index.php",
+            "destination": "/var/www/html/index.php"
+        }
+    },{ "name": "SetPermissions",
+        "args": {
+            "file": "/var/www/html/index.php",
+            "owner": "www-data",
+            "group": "www-data",
+            "mode": "644"
+        }
+    }
+]
+```
+
 The different actions and args described below:
 
-action/arg          Description
+- **CopyFile:** Copies a file from the local machine to the remote server
+    - *source:* The local path to the source file
+    - *destination:* The remote path file being copied
 
-CopyFile            Copies a file from the local machine to the remote server |
-- source            The local path to the source file
-- destination       The remote path file being copied
+- **InstallPackage:** Installs a package on the server (with i.e. apt-get)
+    - *package:* The package name
+- **MoveFile:** Moves/renames a remote file (i.e. with mv)
+    - *source:* The remote path to the source file
+    - *destination:* The remote path to destination
 
-InstallPackage      Installs a package on the server (with i.e. apt-get)
-- package           The package name
+- **RemovePackage:** Uninstalls a package on the server (with i.e. apt-get)
+    - *package:* The package name
 
-MoveFile            Moves/renames a remote file (i.e. with mv)
-- source            The remote path to the source file
-- destination       The remote path to destination
+- **RestartService:** Restarts a service on the remote server (i.e. service xxx restart)
+    - *service:* The service name
 
-RemovePackage       Uninstalls a package on the server (with i.e. apt-get)
-- package           The package name
-
-RestartService      Restarts a service on the remote server (i.e. service xxx restart)
-- service           The service name
-
-SetPermissions      Sets the owner, group and permissions on a file. It uses
-                    chown, chgrp and chmod in the background
-- file              File being repermissioned
-- owner             The new owner (an user)
-- group             The new group
-- mode              File permissions. Any form of permissions chmod allows should work here
-
+- **SetPermissions:** Sets the owner, group and permissions on a file. It uses chown, chgrp and chmod in the background
+    - *file:* File being repermissioned
+    - *owner:* The new owner (an user)
+    - *group:* The new group
+    - *mode:* File permissions. Any form of permissions chmod allows should work here
 
 # Developer's Guide
 
