@@ -1,0 +1,27 @@
+[   {   "name": "InstallPackage",
+        "args": {
+            "pkg": "apache2 php5"
+        }
+    },{ "name": "CopyFile",
+        "args": {
+            "source": "C:\\Users\\vizha\\Documents\\java\\octopus\\octopus\\src\\main\\resources\\index.php",
+            "destination": "/var/www/html/index.php"
+        }
+    },{ "name": "SetPermissions",
+        "args": {
+            "file": "/var/www/html/index.php",
+            "owner": "www-data",
+            "group": "www-data",
+            "mode": "644"
+        }
+    },{ "name": "MoveFile",
+        "args": {
+            "source": "/var/www/html/index.html",
+            "destination": "/var/www/html/index_original.html"
+        }
+    },{ "name": "RestartService",
+        "args": {
+            "service": "apache2"
+        }
+    }
+]
